@@ -1,130 +1,569 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Paramee Hansana | Data Analyst</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <style>
+    :root {
+      --bg: #080d14;
+      --surface: #0e1621;
+      --card: #131d2b;
+      --border: #1e2e42;
+      --accent: #00d4aa;
+      --accent2: #3b82f6;
+      --text: #e2eaf4;
+      --muted: #6b8299;
+      --tag-bg: #0a1929;
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Segoe UI', sans-serif; background: #0f172a; color: #e2e8f0; }
-    
-    nav { background: #1e293b; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; }
-    nav h1 { color: #38bdf8; font-size: 1.2rem; }
-    nav a { color: #94a3b8; text-decoration: none; margin-left: 1.5rem; }
-    nav a:hover { color: #38bdf8; }
 
-    .hero { text-align: center; padding: 5rem 2rem; }
-    .hero h2 { font-size: 3rem; color: #f1f5f9; }
-    .hero h2 span { color: #38bdf8; }
-    .hero p { color: #94a3b8; margin-top: 1rem; font-size: 1.1rem; max-width: 600px; margin: 1rem auto; }
-    .btn { display: inline-block; margin-top: 2rem; padding: 0.8rem 2rem; background: #38bdf8; color: #0f172a; border-radius: 8px; text-decoration: none; font-weight: bold; }
+    html { scroll-behavior: smooth; }
 
-    section { padding: 4rem 2rem; max-width: 1000px; margin: 0 auto; }
-    h3 { font-size: 1.8rem; color: #38bdf8; margin-bottom: 2rem; text-align: center; }
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
 
-    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; }
-    .skill { background: #1e293b; padding: 1rem; border-radius: 8px; text-align: center; border: 1px solid #334155; }
-    .skill span { font-size: 1.5rem; }
-    .skill p { margin-top: 0.5rem; font-size: 0.9rem; color: #94a3b8; }
+    /* NAV */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 100;
+      background: rgba(8,13,20,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 2rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .nav-logo {
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--accent);
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      margin-left: 2rem;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
 
-    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-    .card { background: #1e293b; border-radius: 12px; padding: 1.5rem; border: 1px solid #334155; }
-    .card h4 { color: #f1f5f9; font-size: 1.1rem; }
-    .card p { color: #94a3b8; margin-top: 0.5rem; font-size: 0.9rem; line-height: 1.6; }
-    .tag { display: inline-block; background: #0f172a; color: #38bdf8; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.75rem; margin: 0.5rem 0.3rem 0 0; }
-    .card a { display: inline-block; margin-top: 1rem; color: #38bdf8; font-size: 0.9rem; text-decoration: none; }
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,212,170,0.06) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: 800px;
+      text-align: center;
+    }
+    .hero-tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    }
+    .hero-tag::before, .hero-tag::after {
+      content: ''; width: 40px; height: 1px; background: var(--accent); opacity: 0.4;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero p {
+      font-size: 1.1rem;
+      color: var(--muted);
+      max-width: 580px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.8;
+    }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      padding: 0.8rem 2rem;
+      background: var(--accent);
+      color: var(--bg);
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: opacity 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-outline {
+      padding: 0.8rem 2rem;
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
 
-    .contact { text-align: center; background: #1e293b; padding: 4rem 2rem; }
-    .contact p { color: #94a3b8; margin-bottom: 1.5rem; }
-    .contact-links a { display: inline-block; margin: 0.5rem; padding: 0.7rem 1.5rem; border: 1px solid #38bdf8; color: #38bdf8; border-radius: 8px; text-decoration: none; }
-    .contact-links a:hover { background: #38bdf8; color: #0f172a; }
+    .hero-stats {
+      display: flex; justify-content: center; gap: 3rem;
+      margin-top: 4rem;
+      padding-top: 3rem;
+      border-top: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .stat-num {
+      font-size: 2rem; font-weight: 700; color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.2rem; }
 
-    footer { text-align: center; padding: 2rem; color: #475569; font-size: 0.85rem; }
+    /* SECTIONS */
+    section { padding: 5rem 2rem; max-width: 1000px; margin: 0 auto; }
+    .section-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+    .section-title {
+      font-size: 2rem; font-weight: 700;
+      margin-bottom: 3rem;
+      letter-spacing: -0.02em;
+    }
+
+    /* SKILLS */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .skill-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.25rem 1.5rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .skill-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .skill-category {
+      font-size: 0.7rem;
+      color: var(--accent);
+      font-family: 'JetBrains Mono', monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .skill-items {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* EXPERIENCE */
+    .exp-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      border-radius: 10px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    .exp-header { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+    .exp-title { font-size: 1.1rem; font-weight: 600; }
+    .exp-company { color: var(--accent); font-size: 0.9rem; margin-top: 0.2rem; }
+    .exp-date {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--muted);
+      background: var(--tag-bg);
+      padding: 0.3rem 0.8rem;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+    .exp-list { list-style: none; margin-top: 0.5rem; }
+    .exp-list li {
+      color: var(--muted);
+      font-size: 0.9rem;
+      padding: 0.3rem 0;
+      padding-left: 1rem;
+      position: relative;
+      line-height: 1.6;
+    }
+    .exp-list li::before {
+      content: '→';
+      position: absolute; left: 0;
+      color: var(--accent); font-size: 0.8rem;
+    }
+
+    /* PROJECTS */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 1.5rem;
+    }
+    .project-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.75rem;
+      display: flex; flex-direction: column;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .project-card:hover { border-color: var(--accent2); transform: translateY(-3px); }
+    .project-icon { font-size: 1.8rem; margin-bottom: 1rem; }
+    .project-title { font-size: 1rem; font-weight: 600; margin-bottom: 0.6rem; }
+    .project-desc { font-size: 0.875rem; color: var(--muted); line-height: 1.7; flex: 1; }
+    .project-tags { margin-top: 1.25rem; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .tag {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      background: var(--tag-bg);
+      color: var(--accent2);
+      border: 1px solid var(--border);
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+    }
+    .project-link {
+      display: inline-block;
+      margin-top: 1.25rem;
+      color: var(--accent);
+      font-size: 0.85rem;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .project-link:hover { text-decoration: underline; }
+
+    /* EDUCATION */
+    .edu-grid { display: grid; gap: 1rem; }
+    .edu-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 0.5rem;
+    }
+    .edu-deg { font-weight: 600; font-size: 1rem; }
+    .edu-school { color: var(--muted); font-size: 0.875rem; margin-top: 0.3rem; }
+    .edu-gpa { color: var(--accent); font-size: 0.8rem; font-family: 'JetBrains Mono', monospace; margin-top: 0.3rem; }
+    .edu-year {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--muted);
+      background: var(--tag-bg);
+      border: 1px solid var(--border);
+      padding: 0.3rem 0.8rem;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+
+    /* CONTACT */
+    .contact-section {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 5rem 2rem;
+      text-align: center;
+    }
+    .contact-section .section-title { margin-bottom: 1rem; }
+    .contact-sub { color: var(--muted); margin-bottom: 2.5rem; font-size: 1rem; }
+    .contact-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; }
+    .contact-link {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .contact-link:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+      font-size: 0.8rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .hero-stats { gap: 1.5rem; }
+      section { padding: 3rem 1rem; }
+    }
   </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
-  <h1>Paramee Hansana</h1>
-  <div>
-    <a href="#projects">Projects</a>
+  <div class="nav-logo">paramee.hansana</div>
+  <div class="nav-links">
     <a href="#skills">Skills</a>
+    <a href="#experience">Experience</a>
+    <a href="#projects">Projects</a>
+    <a href="#education">Education</a>
     <a href="#contact">Contact</a>
   </div>
 </nav>
 
+<!-- HERO -->
 <div class="hero">
-  <h2>Hi, I'm <span>Paramee</span> 👋</h2>
-  <h2>Data Analyst & Dashboard Builder</h2>
-  <p>I turn raw data into clear insights. Specialized in Google Ads, Meta Ads analytics, and Python-powered dashboards.</p>
-  <a href="#projects" class="btn">View My Work</a>
+  <div class="hero-inner">
+    <div class="hero-tag">Data Analyst & Dashboard Engineer</div>
+    <h1>Hi, I'm <span>Paramee</span><br/>Hansana</h1>
+    <p>Third-year Data Science undergraduate at SLIIT with hands-on experience building automated analytics pipelines, API-integrated dashboards, and machine learning systems.</p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="#contact" class="btn-outline">Get In Touch</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-num">6+</div>
+        <div class="stat-label">Projects Built</div>
+      </div>
+      <div>
+        <div class="stat-num">20+</div>
+        <div class="stat-label">Brand Pages Tracked</div>
+      </div>
+      <div>
+        <div class="stat-num">3.4</div>
+        <div class="stat-label">Current GPA</div>
+      </div>
+      <div>
+        <div class="stat-num">5</div>
+        <div class="stat-label">APIs Integrated</div>
+      </div>
+    </div>
+  </div>
 </div>
 
+<!-- SKILLS -->
 <section id="skills">
-  <h3>Skills</h3>
+  <div class="section-label">// capabilities</div>
+  <div class="section-title">Technical Skills</div>
   <div class="skills-grid">
-    <div class="skill"><span>🐍</span><p>Python</p></div>
-    <div class="skill"><span>📊</span><p>Data Analysis</p></div>
-    <div class="skill"><span>📈</span><p>Google Ads API</p></div>
-    <div class="skill"><span>📘</span><p>Meta Ads API</p></div>
-    <div class="skill"><span>⚛️</span><p>React</p></div>
-    <div class="skill"><span>🗄️</span><p>SQL</p></div>
-    <div class="skill"><span>📉</span><p>Dashboard Dev</p></div>
-    <div class="skill"><span>🔄</span><p>Data Scraping</p></div>
+    <div class="skill-card">
+      <div class="skill-category">Languages</div>
+      <div class="skill-items">Python · SQL · R · Java · PHP · JavaScript</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-category">Data & Analytics</div>
+      <div class="skill-items">Pandas · PySpark · NumPy · Scikit-learn · ETL Pipelines</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-category">Visualisation</div>
+      <div class="skill-items">Power BI · Matplotlib · Plotly · DAX · React.js</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-category">APIs & Platforms</div>
+      <div class="skill-items">Meta Graph API · Google Ads API · YouTube API · TikTok API</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-category">Big Data</div>
+      <div class="skill-items">Apache Spark · openpyxl · Pattern Analysis · Anomaly Detection</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-category">Tools</div>
+      <div class="skill-items">Git · GitHub · VS Code · Jupyter · Power BI · Figma</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-category">Databases</div>
+      <div class="skill-items">MySQL · MongoDB</div>
+    </div>
+    <div class="skill-card">
+      <div class="skill-category">Frameworks</div>
+      <div class="skill-items">FastAPI · Flask · MERN Stack · React.js</div>
+    </div>
   </div>
 </section>
 
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">// work history</div>
+  <div class="section-title">Experience</div>
+  <div class="exp-card">
+    <div class="exp-header">
+      <div>
+        <div class="exp-title">Data Analyst Intern</div>
+        <div class="exp-company">Capital Maharaja Group · Colombo</div>
+      </div>
+      <div class="exp-date">Feb 2026 – Present</div>
+    </div>
+    <ul class="exp-list">
+      <li>Built a full-stack social media analytics dashboard automating insight reporting for 20+ brand pages across Facebook, Instagram, YouTube, Google Ads, and TikTok.</li>
+      <li>Integrated Meta Graph API, YouTube Data API, Google Ads API, and TikTok API for real-time campaign performance tracking.</li>
+      <li>Tracked key metrics including reach, engagement, impressions, CTR, CPC, ad spend, ROI, and video performance.</li>
+      <li>Performed recurring sales and business data analysis using Python, PySpark, and Pandas to identify revenue trends and anomalies.</li>
+      <li>Developed interactive Power BI dashboards to visualize business performance metrics for cross-department reporting.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- PROJECTS -->
 <section id="projects">
-  <h3>Projects</h3>
+  <div class="section-label">// what i've built</div>
+  <div class="section-title">Projects</div>
   <div class="projects-grid">
 
-    <div class="card">
-      <h4>📊 Meta & Google Ads Dashboard</h4>
-      <p>A live full-stack dashboard that pulls real-time data from Google Ads and Meta Ads APIs, showing campaign performance, spend, and ROI in one place.</p>
-      <span class="tag">Python</span>
-      <span class="tag">React</span>
-      <span class="tag">Google Ads API</span>
-      <span class="tag">Meta API</span>
-      <br/>
-      <a href="YOUR_GITHUB_LINK" target="_blank">→ View on GitHub</a>
+    <div class="project-card">
+      <div class="project-icon">📊</div>
+      <div class="project-title">Meta & Google Ads Automation Dashboard</div>
+      <div class="project-desc">Automated dashboard integrating Meta Ads and Google Ads APIs to track campaign performance, ad spend, ROI, and key metrics in real-time — eliminating manual reporting.</div>
+      <div class="project-tags">
+        <span class="tag">Python</span>
+        <span class="tag">FastAPI</span>
+        <span class="tag">React.js</span>
+        <span class="tag">Meta API</span>
+        <span class="tag">Google Ads API</span>
+      </div>
+      <a href="https://github.com/paramee1879" class="project-link">→ View on GitHub</a>
     </div>
 
-    <div class="card">
-      <h4>📈 Sales Performance Analysis</h4>
-      <p>Analyzed 12 months of sales data to identify top-performing products, seasonal trends, and revenue opportunities using Python and Pandas.</p>
-      <span class="tag">Python</span>
-      <span class="tag">Pandas</span>
-      <span class="tag">Matplotlib</span>
-      <br/>
-      <a href="YOUR_GITHUB_LINK" target="_blank">→ View on GitHub</a>
+    <div class="project-card">
+      <div class="project-icon">🤖</div>
+      <div class="project-title">Team Coordination & Task Allocation Analysis</div>
+      <div class="project-desc">Analysed 100,000 employee records using 5 ML models (logistic regression, decision tree, random forest, gradient boosting, SVM) achieving ~59.3% accuracy. Deployed via Flask web app.</div>
+      <div class="project-tags">
+        <span class="tag">Python</span>
+        <span class="tag">Scikit-learn</span>
+        <span class="tag">Pandas</span>
+        <span class="tag">Flask</span>
+        <span class="tag">ML</span>
+      </div>
+      <a href="https://github.com/paramee1879" class="project-link">→ View on GitHub</a>
     </div>
 
-    <div class="card">
-      <h4>🗄️ SQL Business Report</h4>
-      <p>Built automated SQL queries to generate weekly business reports on customer behavior, churn rate, and product performance for stakeholders.</p>
-      <span class="tag">SQL</span>
-      <span class="tag">PostgreSQL</span>
-      <span class="tag">Excel</span>
-      <br/>
-      <a href="YOUR_GITHUB_LINK" target="_blank">→ View on GitHub</a>
+    <div class="project-card">
+      <div class="project-icon">📈</div>
+      <div class="project-title">Sales & Business Data Analysis (2021–2026)</div>
+      <div class="project-desc">Recurring analysis of multi-year sales data using PySpark and Pandas. Identified revenue trends, seasonal patterns, merchant performance, and business anomalies.</div>
+      <div class="project-tags">
+        <span class="tag">Python</span>
+        <span class="tag">PySpark</span>
+        <span class="tag">Pandas</span>
+        <span class="tag">Jupyter</span>
+      </div>
+      <a href="https://github.com/paramee1879/sales-analysis-2021-2026" class="project-link">→ View on GitHub</a>
+    </div>
+
+    <div class="project-card">
+      <div class="project-icon">🗂️</div>
+      <div class="project-title">Power BI Business Dashboards (HR & Sales)</div>
+      <div class="project-desc">Designed interactive Power BI dashboards with advanced DAX measures and data visualisations, enabling HR and sales teams to make data-informed decisions.</div>
+      <div class="project-tags">
+        <span class="tag">Power BI</span>
+        <span class="tag">DAX</span>
+        <span class="tag">Data Viz</span>
+      </div>
+      <a href="https://github.com/paramee1879" class="project-link">→ View on GitHub</a>
+    </div>
+
+    <div class="project-card">
+      <div class="project-icon">🏥</div>
+      <div class="project-title">Elders Care Management System</div>
+      <div class="project-desc">AI-based health monitoring system with voice-enabled assistance built on MERN stack, supporting caregivers and improving accessibility for elderly users.</div>
+      <div class="project-tags">
+        <span class="tag">MERN</span>
+        <span class="tag">AI</span>
+        <span class="tag">MongoDB</span>
+        <span class="tag">React</span>
+      </div>
+      <a href="https://github.com/paramee1879" class="project-link">→ View on GitHub</a>
+    </div>
+
+    <div class="project-card">
+      <div class="project-icon">🏦</div>
+      <div class="project-title">Online Banking System</div>
+      <div class="project-desc">Secure online banking platform with account management, transactions, and user authentication built with Java, JSP, Servlets, and MySQL.</div>
+      <div class="project-tags">
+        <span class="tag">Java</span>
+        <span class="tag">JSP</span>
+        <span class="tag">MySQL</span>
+        <span class="tag">Bootstrap</span>
+      </div>
+      <a href="https://github.com/paramee1879" class="project-link">→ View on GitHub</a>
     </div>
 
   </div>
 </section>
 
-<div class="contact" id="contact">
-  <h3>Let's Work Together</h3>
-  <p>Available for freelance projects. Let's turn your data into decisions.</p>
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-label">// academic background</div>
+  <div class="section-title">Education</div>
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div>
+        <div class="edu-deg">BSc (Hons) in Data Science</div>
+        <div class="edu-school">Sri Lanka Institute of Information Technology (SLIIT)</div>
+        <div class="edu-gpa">GPA: 3.4 / 4.0</div>
+      </div>
+      <div class="edu-year">2023 – Present</div>
+    </div>
+    <div class="edu-card">
+      <div>
+        <div class="edu-deg">Diploma in English</div>
+        <div class="edu-school">SIBA Campus</div>
+      </div>
+      <div class="edu-year">2023</div>
+    </div>
+    <div class="edu-card">
+      <div>
+        <div class="edu-deg">G.C.E. Advanced Level — Physical Science</div>
+        <div class="edu-school">Girls' High School Kandy</div>
+      </div>
+      <div class="edu-year">2022</div>
+    </div>
+    <div class="edu-card">
+      <div>
+        <div class="edu-deg">G.C.E. Ordinary Level</div>
+        <div class="edu-school">Girls' High School Kandy — 9A Results</div>
+      </div>
+      <div class="edu-year">2019</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <div class="section-label" style="text-align:center">// get in touch</div>
+  <div class="section-title">Let's Work Together</div>
+  <p class="contact-sub">Available for freelance data analysis, dashboard development, and API integration projects.</p>
   <div class="contact-links">
-    <a href="mailto:your@email.com">📧 Email Me</a>
-    <a href="https://linkedin.com/in/yourprofile" target="_blank">💼 LinkedIn</a>
-    <a href="https://github.com/paramee1879" target="_blank">🐙 GitHub</a>
-    <a href="https://fiverr.com/yourprofile" target="_blank">💰 Fiverr</a>
+    <a href="mailto:hansanatp@gmail.com" class="contact-link">📧 hansanatp@gmail.com</a>
+    <a href="https://www.linkedin.com/in/paramee-hansana-7b7752331/" target="_blank" class="contact-link">💼 LinkedIn</a>
+    <a href="https://github.com/paramee1879" target="_blank" class="contact-link">🐙 GitHub</a>
+    <a href="tel:+94762028980" class="contact-link">📞 076-202-8980</a>
   </div>
 </div>
 
 <footer>
-  <p>© 2026 Paramee Hansana · Built with HTML & CSS</p>
+  © 2026 Paramee Hansana · Data Analyst · Built with HTML & CSS
 </footer>
 
 </body>
